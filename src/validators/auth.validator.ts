@@ -27,6 +27,18 @@ export const registerValidator = [
   body("role")
     .isIn(["buyer", "seller"])
     .withMessage("Role must be either 'buyer' or 'seller'"),
+  body("isSeller")
+    .isBoolean()
+    .withMessage("isSeller must be a boolean"),
+
+    validateRequest
+];
+
+export const loginValidator = [
+  body("email").isEmail().withMessage("Please provide a valid email"),
+  body("password")
+    .isLength({ min: 6 })
+    .withMessage("Password must be at least 6 characters long"),
 
     validateRequest
 ];

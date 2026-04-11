@@ -5,9 +5,12 @@ type Config = {
   readonly MONGO_URI: string;
   readonly PORT: number;
   readonly JWT_SECRET: string;
+  readonly GOOGLE_CLIENT_ID?: string;
+  readonly GOOGLE_CLIENT_SECRET?: string;
+  readonly GOOGLE_CALLBACK_URL?: string;
 };
 
-if (!process.env.MONGO_URI || !process.env.PORT || !process.env.JWT_SECRET) {
+if (!process.env.MONGO_URI || !process.env.PORT || !process.env.JWT_SECRET || !process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET || !process.env.GOOGLE_CALLBACK_URL) {
   throw new Error("Missing required environment variables");
 }
 
@@ -15,6 +18,9 @@ export const config: Config = {
   MONGO_URI: process.env.MONGO_URI as string,
   PORT: Number(process.env.PORT),
   JWT_SECRET: process.env.JWT_SECRET as string,
+  GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+  GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL,
 };
 
 // this file is used to load environment variables and export them as a config object that can be used throughout the application. It also validates that all required environment variables are present before exporting the config.
