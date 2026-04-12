@@ -68,7 +68,23 @@ export const googleAuth = async (req: Request, res: Response) => {
   // This function will be called after successful authentication with Google
   // You can access the authenticated user's information through req.user
   // For example, you can create a JWT token for the user and send it back in the response
+  console.log(req.user);
+   const {id,displayName,emails,photos} = req.user as any
+    const email = emails[0].value
+    const profilePicture = photos[0].value
 
-  res.redirect('/'); // Redirect to the home page or any other page after successful authentication
-
+    const user = await UserModel.findOne({
+      email
+    })
+    if(!user){
+      const newUser = await UserModel.create({
+        email,
+        fullName: displayName,
+        googleId: id,
+      })
+    }
+    const token = jwt.sign({id},config.JWT_SECRET as string)
+    res.cookie("token",token)
+    res.redirect("http://localhost:5173/") // Redirect to frontend after successful authentication
+    return res.status(200).json({message:"User authenticated with Google successfully",token})
 }
