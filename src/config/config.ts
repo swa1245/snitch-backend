@@ -9,9 +9,10 @@ type Config = {
   readonly GOOGLE_CLIENT_SECRET?: string;
   readonly GOOGLE_CALLBACK_URL?: string;
   readonly NODE_ENV: "development" | "production" | "test";
+  readonly IMAGEKIT_PRIVATE_KEY?: string;
 };
 
-if (!process.env.MONGO_URI || !process.env.PORT || !process.env.JWT_SECRET || !process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET || !process.env.GOOGLE_CALLBACK_URL || !process.env.NODE_ENV) {
+if (!process.env.MONGO_URI || !process.env.PORT || !process.env.JWT_SECRET || !process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET || !process.env.GOOGLE_CALLBACK_URL || !process.env.NODE_ENV || !process.env.IMAGEKIT_PRIVATE_KEY) {
   throw new Error("Missing required environment variables");
 }
 
@@ -23,6 +24,7 @@ export const config: Config = {
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL,
   NODE_ENV: process.env.NODE_ENV as "development" | "production" | "test",
+  IMAGEKIT_PRIVATE_KEY: process.env.IMAGEKIT_PRIVATE_KEY,
 };
 
 // this file is used to load environment variables and export them as a config object that can be used throughout the application. It also validates that all required environment variables are present before exporting the config.
