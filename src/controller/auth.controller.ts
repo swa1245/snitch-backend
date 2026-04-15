@@ -99,29 +99,3 @@ export const googleAuth = async (req: Request, res: Response) => {
     .json({ message: "User authenticated with Google successfully", token });
 };
 
-export const createProduct = async (req: Request, res: Response) => {
-  const { title, description, priceAmount, priceCurrency } = req.body;
-  const seller = req.user; // Assuming the authenticated user's ID is stored in req.user
-  if (!title || !description || !priceAmount || !priceCurrency) {
-    return res.status(400).json({ message: "All fields are required" });
-  }
-  const images = await Promise.all(
-    req.files.map(async (file: any) => {
-      return await uploadImage(file.buffer, file.originalname);
-    }),
-  );
-
-  const product = await ProductModel.create({
-    title,
-    description,
-    price: {
-      amount: priceAmount,
-      currency: priceCurrency || "INR",
-    },
-    seller: seller._id,
-    images,
-  });
-  return res
-    .status(201)
-    .json({ message: "Product created successfully", product });
-};
