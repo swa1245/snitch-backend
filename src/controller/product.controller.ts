@@ -52,3 +52,23 @@ export const getSellerProducts = async (req: Request, res: Response) => {
     .status(200)
     .json({ message: "Seller products fetched successfully", products });
 };
+
+export const getAllProducts = async (req: Request, res: Response) => {
+  const products = await ProductModel.find();
+  return res
+    .status(200)
+    .json({ message: "Products fetched successfully", products });
+};
+
+export const getProductDetails = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const product = await ProductModel.findById(id);
+  if(!product){
+    return res.status(404).json({ message: "Product not found" });
+  }
+  return res
+    .status(200)
+    .json({ message: "Product details fetched successfully", product });
+};
+
+

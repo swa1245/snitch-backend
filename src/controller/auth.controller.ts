@@ -37,9 +37,11 @@ export const register = async (req: Request, res: Response) => {
 
     res.cookie("token", token);
 
+    const { password: _, ...userObject } = newUser.toObject();
+
     return res
       .status(201)
-      .json({ message: "User registered successfully", token });
+      .json({ message: "User registered successfully", token, user: userObject });
   } catch (error) {
     console.log(error);
 
@@ -62,10 +64,13 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ message: "Invalid password" });
     }
     const token = jwt.sign({ id: user._id }, config.JWT_SECRET as string);
+
+    const { password: _, ...userObject } = user.toObject();
+
     res.cookie("token", token);
     return res
       .status(200)
-      .json({ message: "User logged in successfully", token });
+      .json({ message: "User logged in successfully", token, user: userObject });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Internal server error" });
@@ -97,5 +102,20 @@ export const googleAuth = async (req: Request, res: Response) => {
   return res
     .status(200)
     .json({ message: "User authenticated with Google successfully", token });
+};
+
+export const logout = async (req: Request, res: Response) => {
+  res.clearCookie("token");
+  return res.status(200).json({ message: "Logged out successfully" });
+};
+
+export const getMe = async (req: Request, res: Response) => {
+  try {
+    const user = req.user;
+    return res.status(200).json({ user });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
 };
 
