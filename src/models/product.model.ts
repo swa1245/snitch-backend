@@ -12,6 +12,18 @@ interface Product extends mongoose.Document {
         url: string;
         altText?: string;
     }[];
+    varints:{
+        iamges:{
+            url:string;
+            altText?:string;
+        }[];
+        stock:number;
+        price:{
+            amount:number;
+            currency:"USD" | "EUR" | "GBP";
+        };
+        attributes:Map<string,string>;
+    }[];
 }
 
 
@@ -48,6 +60,38 @@ const productSchema = new mongoose.Schema<Product>({
             altText:{
                 type:String,
                 required:false
+            }
+        }
+    ],
+    varints:[
+        {
+            iamges:[
+                {
+                    url:{
+                        type:String,
+                        required:true
+                    }
+                }
+            ],
+            stock:{
+                type:Number,
+                required:true,
+                default:0
+            },
+            price:{
+                amount:{
+                    type:Number,
+                    required:true
+                },
+                currency:{
+                    type:String,
+                    enum:["USD", "EUR", "GBP"],
+                }
+            },
+            attributes:{
+                type:Map,
+                of:String,
+                required:true
             }
         }
     ]
