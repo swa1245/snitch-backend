@@ -7,9 +7,9 @@ import { uploadImage } from "../services/storage.service.js";
 import { ProductModel } from "../models/product.model.js";
 
 export const register = async (req: Request, res: Response) => {
-  const { email, password, fullName, contact, role, isSeller } = req.body;
-  if (!email || !password || !fullName || !contact || !role || !isSeller) {
-    return res.status(400).json({ message: "All fields are required" });
+  const { email, password, fullName, contact, isSeller } = req.body;
+  if (!email || !password || !fullName || !contact) {
+    return res.status(400).json({ message: "Mandatory fields are missing" });
   }
   try {
     const isExistingUser = await UserModel.findOne({

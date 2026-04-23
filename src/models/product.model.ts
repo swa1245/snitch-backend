@@ -12,86 +12,90 @@ interface Product extends mongoose.Document {
         url: string;
         altText?: string;
     }[];
-    varints:{
-        iamges:{
-            url:string;
-            altText?:string;
+    variants: {
+        images: {
+            url: string;
+            altText?: string;
         }[];
-        stock:number;
-        price:{
-            amount:number;
-            currency:"USD" | "EUR" | "GBP";
+        stock: number;
+        price: {
+            amount: number;
+            currency: "USD" | "EUR" | "GBP";
         };
-        attributes:Map<string,string>;
+        attributes: Map<string, string>;
     }[];
 }
 
 
 const productSchema = new mongoose.Schema<Product>({
-    title:{
-        type:String,
-        required:true
+    title: {
+        type: String,
+        required: true
     },
-    description:{
-        type:String,
-        required:true
+    description: {
+        type: String,
+        required: true
     },
-    seller:{
+    seller: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required:true
+        required: true
     },
-    price:{
-        amount:{
-            type:Number,
-            required:true
+    price: {
+        amount: {
+            type: Number,
+            required: true
         },
-        currency:{
-            type:String,
-            enum:["USD", "EUR", "GBP"],
+        currency: {
+            type: String,
+            enum: ["USD", "EUR", "GBP"],
         }
     },
-    images:[
+    images: [
         {
-            url:{
-                type:String,
-                required:true
+            url: {
+                type: String,
+                required: true
             },
-            altText:{
-                type:String,
-                required:false
+            altText: {
+                type: String,
+                required: false
             }
         }
     ],
-    varints:[
+    variants: [
         {
-            iamges:[
+            images: [
                 {
-                    url:{
-                        type:String,
-                        required:true
+                    url: {
+                        type: String,
+                        required: true
+                    },
+                    altText: {
+                        type: String,
+                        required: false
                     }
                 }
             ],
-            stock:{
-                type:Number,
-                required:true,
-                default:0
+            stock: {
+                type: Number,
+                required: true,
+                default: 0
             },
-            price:{
-                amount:{
-                    type:Number,
-                    required:true
+            price: {
+                amount: {
+                    type: Number,
+                    required: true
                 },
-                currency:{
-                    type:String,
-                    enum:["USD", "EUR", "GBP"],
+                currency: {
+                    type: String,
+                    enum: ["USD", "EUR", "GBP"],
                 }
             },
-            attributes:{
-                type:Map,
-                of:String,
-                required:true
+            attributes: {
+                type: Map,
+                of: String,
+                required: true
             }
         }
     ]
