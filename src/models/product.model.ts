@@ -12,6 +12,9 @@ interface Product extends mongoose.Document {
         url: string;
         altText?: string;
     }[];
+    category: string;
+    brandCollection?: string;
+    occasion?: string;
     variants: {
         images: {
             url: string;
@@ -63,6 +66,18 @@ const productSchema = new mongoose.Schema<Product>({
             }
         }
     ],
+    category: {
+        type: String,
+        required: true
+    },
+    brandCollection: {
+        type: String,
+        default: ""
+    },
+    occasion: {
+        type: String,
+        default: ""
+    },
     variants: [
         {
             images: [
