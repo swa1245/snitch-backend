@@ -175,7 +175,7 @@ const seedDB = async () => {
 
     console.log("Connecting to MongoDB...");
     await mongoose.connect(mongoUri);
-    
+
     const seller = await UserModel.findOne({ role: "seller" }) || await UserModel.findOne();
     if (!seller) {
       console.error("No user found");
@@ -187,7 +187,7 @@ const seedDB = async () => {
     await CategoryModel.deleteMany({});
 
     await CategoryModel.insertMany(seedCategories);
-    
+
     const productsToInsert = seedData.map(p => ({ ...p, seller: seller._id }));
     await ProductModel.insertMany(productsToInsert);
 
